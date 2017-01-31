@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -15,7 +16,7 @@ namespace Calendar
     public partial class Form1 : Form
     {
         // 今の年月日を格納する
-        private int Year = 0;
+        public int Year = 0;
         public int Month = 0;
         public int Day = 0;
 
@@ -23,16 +24,18 @@ namespace Calendar
         public string[] Plans = new string[42];
 
         // クラスの宣言
-        private Object obj = new Object();
-        private DayController day = new DayController();
-        private DataBaseController database = new DataBaseController();
-
-        // 文字列から数字を抽出するためのもの
-        private Regex re = new Regex(@"[^0-9]");
+        private Object obj;
+        private DayController dayC;
+        private DataBaseController database;
 
         public Form1()
         {
             InitializeComponent();
+
+            obj = new Object(this);
+            dayC = new DayController();
+            database = new DataBaseController();
+
             this.SuspendLayout(); // レイアウトロジックの中断
             CalendarStart();
             this.ResumeLayout(false); // レイアウトロジックの最下位
@@ -41,11 +44,11 @@ namespace Calendar
         // 他のメソッドを呼び出す
         private void CalendarStart()
         {
-            day.GetTodayProperty(ref Year, ref Month, ref Day);
+            dayC.GetTodayProperty(ref Year, ref Month, ref Day);
             // カレンダーに年月を格納する
             SetMonth();
             // 今月1日の曜日を取得する
-            int weekNum = day.GetWeekNum(Year, Month, 1);
+            int weekNum = dayC.GetWeekNum(Year, Month, 1);
             MakeTable(weekNum);
         }
 
@@ -72,8 +75,6 @@ namespace Calendar
                     {
                         planCount++;
                         TextBox tb = obj.PlanTB("plan" + planCount);
-                        tb.MouseHover += new EventHandler(tb_Click);
-                        tb.DoubleClick += new EventHandler(tb_DoubleClick);
                         tableLayoutPanel1.Controls.Add(tb, j, i);
                         
                     }
@@ -94,9 +95,9 @@ namespace Calendar
         {
             int count = 0; // コントロールの数
             int dayNum = 1;
-            int dayMaxNum = day.GetDayNum(Year, Month);
+            int dayMaxNum = dayC.GetDayNum(Year, Month);
             bool dayCountFlag = false;
-            int weekNum = day.GetWeekNum(Year, Month, 1);
+            int weekNum = dayC.GetWeekNum(Year, Month, 1);
 
             for (int i = 0; i < tableLayoutPanel1.RowCount; i+=2)
             {
@@ -109,6 +110,8 @@ namespace Calendar
                     if(dayCountFlag && dayNum <= dayMaxNum)
                     {
                         lb.Text = dayNum.ToString();
+                        if (dayC.IfToday(Year, Month, dayNum)) { lb.BackColor = Color.Gray; }
+                        else { lb.BackColor = Color.White; }
                         dayNum++;
                     }
                 }
@@ -120,9 +123,9 @@ namespace Calendar
         {
             int count = 0;
             int dayNum = 1;
-            int dayMaxNum = day.GetDayNum(Year, Month);
+            int dayMaxNum = dayC.GetDayNum(Year, Month);
             bool dayCountFlag = false;
-            int weekNum = day.GetWeekNum(Year, Month, 1);
+            int weekNum = dayC.GetWeekNum(Year, Month, 1);
             for(int i = 1; i < tableLayoutPanel1.RowCount; i += 2)
             {
                 for(int j = 0; j < tableLayoutPanel1.ColumnCount; j++)
@@ -133,18 +136,18 @@ namespace Calendar
                     if (weekNum == j) { dayCountFlag = true; }
                     if (dayCountFlag && dayNum <= dayMaxNum)
                     {
-                        string[][] plan = database.displayPlans(Year, Month, dayNum);
+                        string[][] plans = database.displayPlans(Year, Month, dayNum);
                         dayNum++; // 参照したから日付の加算
-                        if (plan == null) continue;
+                        if (plans == null) continue;
 
                         string str = "";
 
-                        for (int k = 0; k < plan.GetLength(0); k++)
+                        for (int k = 0; k < plans.GetLength(0); k++)
                         {
-                            if (! (plan[k][0] == "")) {
-                                str += plan[k][0] + " ～ " + plan[k][1] + " ";
+                            if (! (plans[k][0] == "")) {
+                                str += plans[k][0] + " ～ " + plans[k][1] + " ";
                             }
-                            str += plan[k][2] + Environment.NewLine;
+                            str += plans[k][2] + Environment.NewLine;
                         }
                         tb.Text = str;
                         Plans[count - 1] = str;
@@ -208,42 +211,22 @@ namespace Calendar
             SetPlans();
         }
 
-        // 予定の全表示
-        private void tb_Click(object sender, EventArgs e)
-        {
-            ToolTip tip = new ToolTip();
-            string FocusName = ((TextBox)sender).Name; // クリックした
-            //Help.ShowPopup(tableLayoutPanel1, Plans[ForcuseNum - 1], Control.MousePosition);
-            tip.SetToolTip(Find(tableLayoutPanel1, FocusName), Plans[int.Parse(re.Replace(FocusName, "")) - 1]);
-        }
-
-        // 予定の登録フォーム表示
-        private void tb_DoubleClick(object sender, EventArgs e)
-        {
-            int textBoxNum = int.Parse(re.Replace(((TextBox)sender).Name,""));
-            if (textBoxNum > 31) return;
-            Form2 form2 = new Form2(Year, Month, textBoxNum, false);
-            form2.FormClosed += new FormClosedEventHandler(Form2_FormClosed);
-            form2.Show();
-            SetPlans();
-            //Control c = Find(sender)
-        }
-
         // 登録フォームを呼び出す
-        private void button1_Click(object sender, EventArgs e)
+        public void button1_Click(object sender, EventArgs e)
         {
-            Form2 form2 = new Form2(Year, Month, Day, false);
-            form2.FormClosed += new FormClosedEventHandler(Form2_FormClosed);
+            Form2 form2 = new Form2(Year, Month, Day, false, "");
+            form2.FormClosed += new FormClosedEventHandler(FormClosed);
             AddOwnedForm(form2);
             form2.Show();
             SetPlans();
         }
 
         // Form2が閉じたら予定を更新する
-        private void Form2_FormClosed(object sendar, FormClosedEventArgs e)
+        public void FormClosed(object sendar, FormClosedEventArgs e)
         {
             SetPlans();
         }
+
 
     }
 }

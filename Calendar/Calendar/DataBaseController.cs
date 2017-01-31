@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SQLite;
 
 namespace Calendar
 {
-    
+
     class DataBaseController
     {
         private static SQLiteConnection _conn = null;
@@ -50,9 +47,9 @@ namespace Calendar
         {
             if (!Open()) return;
             SQLiteCommand command = _conn.CreateCommand();
-            string insertcommand = "(" + Year + ", " + Month + ", " + Day + ", '" + time1 + "', '" + time2 + "', '" + plan + "' )";
+            //string insertcommand = "(" + Year + ", " + Month + ", " + Day + ", '" + time1 + "', '" + time2 + "', '" + plan + "' )";
             //Console.WriteLine(insertcommand);
-            command.CommandText = "insert into plan values" + insertcommand;
+            command.CommandText = $"insert into plan values({Year}, {Month}, {Day}, '{time1}', '{time2}', '{plan}')";
             command.ExecuteNonQuery();
             Close();
         }
@@ -74,7 +71,7 @@ namespace Calendar
             try
             {
                 SQLiteCommand command = _conn.CreateCommand();
-                command.CommandText = "select Start, End, Plan from plan where Year = " + Year + " AND Month = " + Month + " AND Day = " + Day;
+                command.CommandText = $"select Start, End, Plan from plan where Year = {Year} AND Month = {Month} AND Day = {Day}";
                 using(SQLiteDataReader sdr = command.ExecuteReader())
                 {
                     List<string[]> tuples = new List<string[]>();
@@ -91,12 +88,30 @@ namespace Calendar
                     return tuples.ToArray();
                 }
                 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
                 Close();
                 return null;
             }
+        }
+
+        // 与えられたクエリを実行する
+        public void ActionQuerie(string str)
+        {
+            Open();
+            SQLiteCommand command = _conn.CreateCommand();
+            command.CommandText = str;
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            Close();
         }
     }
 }
