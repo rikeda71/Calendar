@@ -112,6 +112,41 @@ namespace Calendar
             }
         }
 
+        // 通知を挿入
+        public void InsertNotif(int Year, int Month, int Day, int hour, int minute, string plan)
+        {
+            if (!Open()) return;
+            SQLiteCommand command = _conn.CreateCommand();
+            command.CommandText = $"insert into plan values({Year}, {Month}, {Day}, '{hour}', '{minute}', '{plan}')";
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            Close();
+        }
+
+        // 通知の削除
+        public void DeleteNotif(int Year, int Month, int Day, int hour, int minute, string plan)
+        {
+            if (!Open()) return;
+            SQLiteCommand command = _conn.CreateCommand();
+            command.CommandText = $"delete from plan where Year = {Year} AND Month = {Month} AND Day = {Day} AND Start = '{hour}' AND End = '{minute}' AND plan = '{plan}'";
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            Close();
+        }
+
         // 与えられたクエリを実行する
         public void ActionQuerie(string str)
         {

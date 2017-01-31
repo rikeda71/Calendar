@@ -22,11 +22,13 @@ namespace Calendar
 
         // 予定を格納
         public string[] Plans = new string[42];
+        private string[][] googleCalPlans;
 
         // クラスの宣言
         private Object obj;
         private DayController dayC;
         private DataBaseController database;
+        private GoogleCalendarInfo googleCalInfo;
 
         public Form1()
         {
@@ -35,8 +37,10 @@ namespace Calendar
             obj = new Object(this);
             dayC = new DayController();
             database = new DataBaseController();
+            googleCalInfo = new GoogleCalendarInfo();
 
             this.SuspendLayout(); // レイアウトロジックの中断
+            googleCalPlans = googleCalInfo.GetGoogleCalPlan();
             CalendarStart();
             this.ResumeLayout(false); // レイアウトロジックの最下位
         }
@@ -136,24 +140,25 @@ namespace Calendar
                     if (weekNum == j) { dayCountFlag = true; }
                     if (dayCountFlag && dayNum <= dayMaxNum)
                     {
-                        string[][] plans = database.displayPlans(Year, Month, dayNum);
+                        string[][] plan = database.displayPlans(Year, Month, dayNum);
                         dayNum++; // 参照したから日付の加算
-                        if (plans == null) continue;
+                        if (plan == null) continue;
 
                         string str = "";
 
-                        for (int k = 0; k < plans.GetLength(0); k++)
+                        for (int k = 0; k < plan.GetLength(0); k++)
                         {
-                            if (! (plans[k][0] == "")) {
-                                str += plans[k][0] + " ～ " + plans[k][1] + " ";
+                            if (! (plan[k][0] == "")) {
+                                str += plan[k][0] + " ～ " + plan[k][1] + " ";
                             }
-                            str += plans[k][2] + Environment.NewLine;
+                            str += plan[k][2] + Environment.NewLine;
                         }
                         tb.Text = str;
                         Plans[count - 1] = str;
                     }
                 }
             }
+            SynchroGoogleCal();
         }
 
         // 指定した名前のコントロールを返す
@@ -227,6 +232,29 @@ namespace Calendar
             SetPlans();
         }
 
+        // GoogleCalendarとの同期
+        private void SynchroGoogleCal()
+        {
+            for(int i = 0; i < googleCalPlans.GetLength(0); i++)
+            {
+                int GYear = int.Parse(googleCalPlans[i][1].Substring(0, 4));
+                int GMonth = int.Parse(googleCalPlans[i][1].Substring(5, 2));
+                int GDay = int.Parse(googleCalPlans[i][1].Substring(8, 2));
 
+                // 同じ年月か判定
+                if (Year != GYear || Month != GMonth) continue;
+                for(int j = 0; j < 42; j++)
+                {
+                    Label lb = (Label)Find(tableLayoutPanel1, "day" + (j+1).ToString());
+                    if (lb.Text == "") continue; 
+                    if(int.Parse(lb.Text) == GDay) {
+                        TextBox tb = (TextBox)Find(tableLayoutPanel1, "plan" + (j + 1).ToString());
+                        tb.Text += googleCalPlans[i][0] + Environment.NewLine;
+                    }
+                }
+
+            }
+
+        }
     }
 }
