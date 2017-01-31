@@ -12,6 +12,7 @@ namespace Calendar
             Label lb = new Label();
             lb.Name = name; // 名前を付ける
             lb.BackColor = Color.White;
+            lb.Font = new Font("MS Gothic", 12,FontStyle.Bold);
             if (dirNum == 0) { lb.ForeColor = Color.Red; }
             else if (dirNum == 6) { lb.ForeColor = Color.Blue; }
             return lb;

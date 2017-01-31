@@ -20,7 +20,7 @@ namespace Calendar
         public int Day = 0;
 
         // 予定を格納
-        public string[] Plans = new string[35];
+        public string[] Plans = new string[42];
 
         // カーソルの乗っている番号と名前を格納
         private int ForcuseNum;
@@ -28,7 +28,7 @@ namespace Calendar
 
         // クラスの宣言
         private Object obj = new Object();
-        private DayController dayController = new DayController();
+        private DayController day = new DayController();
         private DataBaseController database = new DataBaseController();
 
         public Form1()
@@ -42,11 +42,11 @@ namespace Calendar
         // 他のメソッドを呼び出す
         private void CalendarStart()
         {
-            dayController.GetTodayProperty(ref Year, ref Month, ref Day);
+            day.GetTodayProperty(ref Year, ref Month, ref Day);
             // カレンダーに年月を格納する
             SetMonth();
             // 今月1日の曜日を取得する
-            int weekNum = dayController.GetWeekNum(Year, Month, 1);
+            int weekNum = day.GetWeekNum(Year, Month, 1);
             MakeTable(weekNum);
         }
 
@@ -95,9 +95,9 @@ namespace Calendar
         {
             int count = 0; // コントロールの数
             int dayNum = 1;
-            int dayMaxNum = dayController.GetDayNum(Year, Month);
+            int dayMaxNum = day.GetDayNum(Year, Month);
             bool dayCountFlag = false;
-            int weekNum = dayController.GetWeekNum(Year, Month, 1);
+            int weekNum = day.GetWeekNum(Year, Month, 1);
 
             for (int i = 0; i < tableLayoutPanel1.RowCount; i+=2)
             {
@@ -117,20 +117,20 @@ namespace Calendar
         }
 
         // カレンダーに予定を挿入する
-        private void SetPlans()
+        public void SetPlans()
         {
             int count = 0;
             int dayNum = 1;
-            int dayMaxNum = dayController.GetDayNum(Year, Month);
+            int dayMaxNum = day.GetDayNum(Year, Month);
             bool dayCountFlag = false;
-            int weekNum = dayController.GetWeekNum(Year, Month, 1);
+            int weekNum = day.GetWeekNum(Year, Month, 1);
             for(int i = 1; i < tableLayoutPanel1.RowCount; i += 2)
             {
                 for(int j = 0; j < tableLayoutPanel1.ColumnCount; j++)
                 {
                     count++; // 数のカウント
                     TextBox tb = (TextBox)Find(tableLayoutPanel1, "plan" + count);
-                    //tb.Text = "";
+
                     if (weekNum == j) { dayCountFlag = true; }
                     if (dayCountFlag && dayNum <= dayMaxNum)
                     {
@@ -230,7 +230,26 @@ namespace Calendar
         // 予定の登録フォーム表示
         private void tb_DoubleClick(object sender, EventArgs e)
         {
+            string textBoxName = ((TextBox)sender).Name.Substring(4,1);
 
+            Console.WriteLine(textBoxName);
+            //Control c = Find(sender)
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form2 form2 = new Form2(Year, Month, Day);
+            form2.FormClosed += new FormClosedEventHandler(Form2_FormClosed);
+            AddOwnedForm(form2);
+            form2.Show();
+            SetPlans();
+        }
+
+        // Form2が閉じたら予定を更新する
+        private void Form2_FormClosed(object sendar, FormClosedEventArgs e)
+        {
+            SetPlans();
+        }
+
     }
 }

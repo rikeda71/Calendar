@@ -19,13 +19,22 @@ namespace Calendar
             todayYear = int.Parse(TodayStr.Substring(0, 4));
             todayMonth = int.Parse(TodayStr.Substring(5, 2));
             todayDay = int.Parse(TodayStr.Substring(8, 2));
-    }
-        // 今日の年月日を取得
+        }
+
         public void GetTodayProperty(ref int Year, ref int Month, ref int Day)
         {
             Year = todayYear;
             Month = todayMonth;
             Day = todayDay;
+        }
+
+        // 今日の年月日を取得
+        public void GetDateProperty(ref int Year, ref int Month, ref int Day, DateTime date)
+        {
+            string str = date.ToString();
+            Year = int.Parse(str.Substring(0, 4));
+            Month = int.Parse(str.Substring(5, 2));
+            Day = int.Parse(str.Substring(8, 2));
         }
 
         // 曜日を取得する
