@@ -15,8 +15,6 @@ namespace Calendar
         public DataBaseController()
         {
             Connection();
-            //InsertPlan(2017, 1, 29, "11:40", "12:00", "car repair");
-            //Console.WriteLine("Connection Clear");
         }
 
         // DBを開く
@@ -57,6 +55,14 @@ namespace Calendar
             command.CommandText = "insert into plan values" + insertcommand;
             command.ExecuteNonQuery();
             Close();
+        }
+
+        // 予定の削除
+        public void DeletePlan(int Year, int Month, int Day, string time1, string time2, string plan)
+        {
+            if (!Open()) return;
+            SQLiteCommand command = _conn.CreateCommand();
+            //string deletecommand = 
         }
 
         // 与えられた日付の予定をすべて出力

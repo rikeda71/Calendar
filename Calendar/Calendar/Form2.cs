@@ -20,9 +20,14 @@ namespace Calendar
 
         private int year, month, day;
 
-        public Form2(int Year, int Month, int Day)
+        public Form2(int Year, int Month, int Day, bool Exist)
         {
             InitializeComponent();
+            // フォームの設定
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
+            if (!Exist) button3.Hide();
+
             monthCalendar1.SetDate(DateTime.Parse(Year + "/" + Month + "/" + Day));
             SetTimes();
             AddComboTimes();
@@ -30,13 +35,31 @@ namespace Calendar
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string before = comboBox1.Text, after = comboBox2.Text;
+            // 予定の確認
             if(textBox1.Text == null)
             {
                 MessageBox.Show("予定を入力してください!");
                 return;
             }
+            // 時間の前後関係の確認
+            if(comboBox1.Text != "" && comboBox2.Text != "") { 
+                DateTime t1 = DateTime.Parse(before + " :00");
+                DateTime t2 = DateTime.Parse(after + " :00");
+                if (dayC.TimeCompare(t1, t2) < 1) {
+                    MessageBox.Show("時間の前後関係が間違っています");
+                    comboBox2.SelectedIndex = comboBox1.SelectedIndex;
+                    return;
+                }
+            }
+            else
+            {
+                before = ""; after = "";
+            }
+
             dayC.GetDateProperty(ref year, ref month, ref day, monthCalendar1.SelectionEnd);
-            database.InsertPlan(year, month, day, comboBox1.Text, comboBox2.Text, textBox1.Text);
+            database.InsertPlan(year, month, day, before, after, textBox1.Text);
+
             this.Close();
         }
 
@@ -65,6 +88,11 @@ namespace Calendar
             if(textBox1.Text =="予定を入力") { textBox1.Clear(); }
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
         // 時間をコンボボックスに格納
         private void AddComboTimes()
         {
@@ -86,6 +114,7 @@ namespace Calendar
             comboBox2.IntegralHeight = false;
         }
 
+        //　開始時間を選んだら終了時間を自動で30分後にする
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
         {
             comboBox2.SelectedIndex = comboBox1.SelectedIndex;

@@ -5,9 +5,9 @@ using System.Windows.Forms;
 
 /**
  * メモ
- * 年、月、日を与え、予定を挿入するメソッド
- * テキストボックスをクリックすると予定を新しく挿入するメソッド
- * カーソルを合わせると予定を自然にぽっと出してくれるメソッド
+ * 予定の更新
+ * 予定の削除
+ * 予定の通知
  */
 
 namespace Calendar
@@ -22,14 +22,13 @@ namespace Calendar
         // 予定を格納
         public string[] Plans = new string[42];
 
-        // カーソルの乗っている番号と名前を格納
-        private int ForcuseNum;
-        private string ForcuseControl;
-
         // クラスの宣言
         private Object obj = new Object();
         private DayController day = new DayController();
         private DataBaseController database = new DataBaseController();
+
+        // 文字列から数字を抽出するためのもの
+        private Regex re = new Regex(@"[^0-9]");
 
         public Form1()
         {
@@ -73,7 +72,7 @@ namespace Calendar
                     {
                         planCount++;
                         TextBox tb = obj.PlanTB("plan" + planCount);
-                        tb.Click += new EventHandler(tb_Click);
+                        tb.MouseHover += new EventHandler(tb_Click);
                         tb.DoubleClick += new EventHandler(tb_DoubleClick);
                         tableLayoutPanel1.Controls.Add(tb, j, i);
                         
@@ -209,36 +208,31 @@ namespace Calendar
             SetPlans();
         }
 
-        // 今、カーソルの下にあるコントロールの番号を返す。
-        private void GetForcuseNum()
-        {
-            string str = this.ActiveControl.Name;
-            Regex re = new Regex(@"[^0-9]");
-            ForcuseNum = int.Parse(re.Replace(str, "")) - 1;
-            ForcuseControl = str;
-        }
-
         // 予定の全表示
         private void tb_Click(object sender, EventArgs e)
         {
-            GetForcuseNum();
             ToolTip tip = new ToolTip();
+            string FocusName = ((TextBox)sender).Name; // クリックした
             //Help.ShowPopup(tableLayoutPanel1, Plans[ForcuseNum - 1], Control.MousePosition);
-            tip.SetToolTip(Find(tableLayoutPanel1, ForcuseControl), Plans[ForcuseNum]);
+            tip.SetToolTip(Find(tableLayoutPanel1, FocusName), Plans[int.Parse(re.Replace(FocusName, "")) - 1]);
         }
 
         // 予定の登録フォーム表示
         private void tb_DoubleClick(object sender, EventArgs e)
         {
-            string textBoxName = ((TextBox)sender).Name.Substring(4,1);
-
-            Console.WriteLine(textBoxName);
+            int textBoxNum = int.Parse(re.Replace(((TextBox)sender).Name,""));
+            if (textBoxNum > 31) return;
+            Form2 form2 = new Form2(Year, Month, textBoxNum, false);
+            form2.FormClosed += new FormClosedEventHandler(Form2_FormClosed);
+            form2.Show();
+            SetPlans();
             //Control c = Find(sender)
         }
 
+        // 登録フォームを呼び出す
         private void button1_Click(object sender, EventArgs e)
         {
-            Form2 form2 = new Form2(Year, Month, Day);
+            Form2 form2 = new Form2(Year, Month, Day, false);
             form2.FormClosed += new FormClosedEventHandler(Form2_FormClosed);
             AddOwnedForm(form2);
             form2.Show();

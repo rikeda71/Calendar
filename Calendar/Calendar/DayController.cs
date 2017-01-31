@@ -61,5 +61,16 @@ namespace Calendar
             }
             else { return false; }
         }
+
+        // 与えた2つの時間の前後関係が正しいか見る
+        public int TimeCompare(DateTime t1, DateTime t2)
+        {
+            /*
+             * t1 < t2 : 1
+             * t1 = t2 : 0
+             * t1 > t2 : -1
+             */
+            return t2.CompareTo(t1);
+        }
     }
 }
