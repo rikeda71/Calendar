@@ -136,6 +136,7 @@ namespace Calendar
                 {
                     count++; // 数のカウント
                     TextBox tb = (TextBox)Find(tableLayoutPanel1, "plan" + count);
+                    tb.Clear();
 
                     if (weekNum == j) { dayCountFlag = true; }
                     if (dayCountFlag && dayNum <= dayMaxNum)

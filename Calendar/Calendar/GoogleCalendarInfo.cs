@@ -55,10 +55,10 @@ namespace Calendar
 
             // データ取得設定
             request = service.Events.List("primary");
-            request.TimeMin = DateTime.Now; // 今日から
+            request.TimeMin = DateTime.Parse("2016/04/01 00:00:00"); // 今年度から
             request.ShowDeleted = false;
             request.SingleEvents = true;
-            request.MaxResults = 20;
+            request.MaxResults = 200;
             request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
         }
 
@@ -90,5 +90,7 @@ namespace Calendar
             }
             return plans.ToArray();
         }
+
+
     }
 }
