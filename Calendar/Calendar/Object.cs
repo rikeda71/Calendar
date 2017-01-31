@@ -65,7 +65,6 @@ namespace Calendar
         {
             ToolTip tip = new ToolTip();
             string FocusName = ((TextBox)sender).Name; // クリックした
-            //Help.ShowPopup(tableLayoutPanel1, Plans[ForcuseNum - 1], Control.MousePosition);
             tip.SetToolTip(Form1.Find(form.tableLayoutPanel1, FocusName), form.Plans[int.Parse(re.Replace(FocusName, "")) - 1]);
         }
 
@@ -75,7 +74,7 @@ namespace Calendar
             int textBoxNum = int.Parse(re.Replace(((TextBox)sender).Name, ""));
             if (textBoxNum > 31) return;
             Form2 form2 = new Form2(form.Year, form.Month, textBoxNum, false,"");
-            form2.FormClosed += new FormClosedEventHandler(form.FormClosed);
+            form2.FormClosed += new FormClosedEventHandler(form.FormClosedEvent);
             form2.Show();
             form.SetPlans();
         }

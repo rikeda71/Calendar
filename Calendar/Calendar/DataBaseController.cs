@@ -47,10 +47,16 @@ namespace Calendar
         {
             if (!Open()) return;
             SQLiteCommand command = _conn.CreateCommand();
-            //string insertcommand = "(" + Year + ", " + Month + ", " + Day + ", '" + time1 + "', '" + time2 + "', '" + plan + "' )";
-            //Console.WriteLine(insertcommand);
             command.CommandText = $"insert into plan values({Year}, {Month}, {Day}, '{time1}', '{time2}', '{plan}')";
-            command.ExecuteNonQuery();
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
             Close();
         }
 
@@ -59,7 +65,16 @@ namespace Calendar
         {
             if (!Open()) return;
             SQLiteCommand command = _conn.CreateCommand();
-            //string deletecommand = 
+            command.CommandText = $"delete from plan where Year = {Year} AND Month = {Month} AND Day = {Day} AND Start = '{time1}' AND End = '{time2}' AND plan = '{plan}'";
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            Close();
         }
 
         // 与えられた日付の予定をすべて出力
@@ -100,7 +115,7 @@ namespace Calendar
         // 与えられたクエリを実行する
         public void ActionQuerie(string str)
         {
-            Open();
+            if(!Open()) return;
             SQLiteCommand command = _conn.CreateCommand();
             command.CommandText = str;
             try

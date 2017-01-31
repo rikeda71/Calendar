@@ -107,7 +107,8 @@ namespace Calendar
 
         private void button3_Click(object sender, EventArgs e)
         {
-
+            database.DeletePlan(year, month, day, time1, time2, plan);
+            this.Close();
         }
 
         // 時間をコンボボックスに格納

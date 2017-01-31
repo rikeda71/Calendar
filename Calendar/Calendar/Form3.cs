@@ -51,7 +51,7 @@ namespace Calendar
             }
             string select = listBox1.SelectedItem.ToString();
             Form2 form2 = new Form2(year, month, day, true, select);
-            form2.FormClosed += new FormClosedEventHandler(form.FormClosed);
+            form2.FormClosed += new FormClosedEventHandler(form.FormClosedEvent);
             form2.Show();
             this.Close();
         }

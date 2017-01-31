@@ -215,14 +215,14 @@ namespace Calendar
         public void button1_Click(object sender, EventArgs e)
         {
             Form2 form2 = new Form2(Year, Month, Day, false, "");
-            form2.FormClosed += new FormClosedEventHandler(FormClosed);
+            form2.FormClosed += new FormClosedEventHandler(FormClosedEvent);
             AddOwnedForm(form2);
             form2.Show();
             SetPlans();
         }
 
         // Form2が閉じたら予定を更新する
-        public void FormClosed(object sendar, FormClosedEventArgs e)
+        public void FormClosedEvent(object sendar, FormClosedEventArgs e)
         {
             SetPlans();
         }
