@@ -47,60 +47,60 @@
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.label1.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label1.Location = new System.Drawing.Point(98, 60);
+            this.label1.Font = new System.Drawing.Font("MS UI Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label1.Location = new System.Drawing.Point(88, 52);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 20);
+            this.label1.Size = new System.Drawing.Size(57, 24);
             this.label1.TabIndex = 1;
             this.label1.Text = "SUN";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label2.Location = new System.Drawing.Point(297, 60);
+            this.label2.Font = new System.Drawing.Font("MS UI Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label2.Location = new System.Drawing.Point(287, 52);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(54, 20);
+            this.label2.Size = new System.Drawing.Size(63, 24);
             this.label2.TabIndex = 2;
             this.label2.Text = "MON";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label3.Location = new System.Drawing.Point(492, 60);
+            this.label3.Font = new System.Drawing.Font("MS UI Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label3.Location = new System.Drawing.Point(482, 52);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(48, 20);
+            this.label3.Size = new System.Drawing.Size(56, 24);
             this.label3.TabIndex = 3;
             this.label3.Text = "TUE";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label4.Location = new System.Drawing.Point(702, 60);
+            this.label4.Font = new System.Drawing.Font("MS UI Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label4.Location = new System.Drawing.Point(692, 52);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(51, 20);
+            this.label4.Size = new System.Drawing.Size(61, 24);
             this.label4.TabIndex = 4;
             this.label4.Text = "WED";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label5.Location = new System.Drawing.Point(890, 60);
+            this.label5.Font = new System.Drawing.Font("MS UI Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label5.Location = new System.Drawing.Point(880, 52);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(50, 20);
+            this.label5.Size = new System.Drawing.Size(57, 24);
             this.label5.TabIndex = 5;
             this.label5.Text = "THU";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label6.Location = new System.Drawing.Point(1094, 60);
+            this.label6.Font = new System.Drawing.Font("MS UI Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label6.Location = new System.Drawing.Point(1084, 52);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(41, 20);
+            this.label6.Size = new System.Drawing.Size(47, 24);
             this.label6.TabIndex = 6;
             this.label6.Text = "FRI";
             // 
@@ -108,18 +108,19 @@
             // 
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.label7.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label7.Location = new System.Drawing.Point(1299, 60);
+            this.label7.Font = new System.Drawing.Font("MS UI Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label7.Location = new System.Drawing.Point(1289, 52);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(49, 20);
+            this.label7.Size = new System.Drawing.Size(56, 24);
             this.label7.TabIndex = 7;
             this.label7.Text = "SAT";
             // 
             // Return
             // 
-            this.Return.Location = new System.Drawing.Point(23, 12);
+            this.Return.Font = new System.Drawing.Font("MS UI Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.Return.Location = new System.Drawing.Point(502, 6);
             this.Return.Name = "Return";
-            this.Return.Size = new System.Drawing.Size(46, 33);
+            this.Return.Size = new System.Drawing.Size(46, 41);
             this.Return.TabIndex = 9;
             this.Return.Text = "←";
             this.Return.UseVisualStyleBackColor = true;
@@ -127,9 +128,10 @@
             // 
             // Next
             // 
-            this.Next.Location = new System.Drawing.Point(75, 12);
+            this.Next.Font = new System.Drawing.Font("MS UI Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.Next.Location = new System.Drawing.Point(869, 6);
             this.Next.Name = "Next";
-            this.Next.Size = new System.Drawing.Size(46, 33);
+            this.Next.Size = new System.Drawing.Size(46, 41);
             this.Next.TabIndex = 10;
             this.Next.Text = "→";
             this.Next.UseVisualStyleBackColor = true;
@@ -138,20 +140,20 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label8.Font = new System.Drawing.Font("MS UI Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label8.Location = new System.Drawing.Point(634, 17);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(62, 20);
+            this.label8.Size = new System.Drawing.Size(72, 24);
             this.label8.TabIndex = 11;
             this.label8.Text = "YEAR";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label9.Location = new System.Drawing.Point(715, 17);
+            this.label9.Font = new System.Drawing.Font("MS UI Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label9.Location = new System.Drawing.Point(727, 17);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(81, 20);
+            this.label9.Size = new System.Drawing.Size(94, 24);
             this.label9.TabIndex = 12;
             this.label9.Text = "MONTH";
             // 
@@ -186,9 +188,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(135, 12);
+            this.button1.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button1.Location = new System.Drawing.Point(23, 6);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(87, 33);
+            this.button1.Size = new System.Drawing.Size(122, 29);
             this.button1.TabIndex = 13;
             this.button1.Text = "予定作成";
             this.button1.UseVisualStyleBackColor = true;

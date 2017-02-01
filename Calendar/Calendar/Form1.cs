@@ -5,10 +5,7 @@ using System.Windows.Forms;
 
 
 /**
- * メモ
- * 予定の更新
- * 予定の削除
- * 予定の通知
+ * メインフォーム
  */
 
 namespace Calendar
@@ -160,6 +157,18 @@ namespace Calendar
                 }
             }
             SynchroGoogleCal();
+            SetPlansColor();
+        }
+
+        // 予定のあるところの色付け
+        private void SetPlansColor()
+        {
+            for(int i = 0; i < 42; i++)
+            {
+                TextBox tb = (TextBox)Find(tableLayoutPanel1, "plan" + (i + 1).ToString());
+                if(tb.Text == "") { tb.BackColor = Color.White; }
+                else { tb.BackColor = Color.LightBlue; }
+            }
         }
 
         // 指定した名前のコントロールを返す
