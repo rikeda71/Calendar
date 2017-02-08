@@ -72,8 +72,12 @@ namespace Calendar
         private void tb_Click(object sender, EventArgs e)
         {
             int textBoxNum = int.Parse(re.Replace(((TextBox)sender).Name, ""));
-            if (textBoxNum > 31) return;
-            Form2 form2 = new Form2(form.Year, form.Month, textBoxNum, false,"");
+            Label lb = (Label)Form1.Find(form.tableLayoutPanel1,"day"+textBoxNum);
+            if(lb.Text == "") { return; } //日にちがないなら処理しない
+
+            int labelNum = int.Parse(re.Replace(lb.Text, ""));
+            //if (textBoxNum > 31) return;
+            Form2 form2 = new Form2(form.Year, form.Month, labelNum, false,"");
             form2.FormClosed += new FormClosedEventHandler(form.FormClosedEvent);
             form2.Show();
             form.SetPlans();
@@ -82,7 +86,8 @@ namespace Calendar
         // 予定の登録フォーム表示
         private void lb_Click(object sender, EventArgs e)
         {
-            int labelNum = int.Parse(re.Replace(((Label)sender).Name, ""));
+            if(((Label)sender).Text == ""){ return; } // 日にちがないので
+            int labelNum = int.Parse(re.Replace(((Label)sender).Text, ""));
             if (labelNum > 31) return;
             Form3 form3 = new Form3(form.Year, form.Month, labelNum, form);
             form3.Show();
